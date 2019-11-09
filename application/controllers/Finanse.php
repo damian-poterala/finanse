@@ -10,6 +10,7 @@
         public function registration()
         {
             $this->load->view('registrationView');
+            // var_dump(base_url().'registration');die;
 
             if(!empty($_POST))
             {
@@ -59,6 +60,18 @@
 
             $this->load->view('sidemenuView');
             $this->load->view('addPaymentView', $date);
+
+            if(!empty($_POST))
+            {
+                $dane = array
+                (
+                    'chooseYear'  => $this->input->post('chooseYear'),
+                    'chooseMonth' => $this->input->post('chooseMonth'),
+                    'payment'     => $this->input->post('payment'), 
+                );
+                // var_Dump($dane);die;
+                $this->FinanseModel->addPayment($dane);
+            }
         }
     }
 

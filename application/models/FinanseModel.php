@@ -39,6 +39,11 @@
 
             return $result = $sql->result_array();
         }
+
+        public function addPayment($dane)
+        {
+            var_dump($dane);die;
+        }
     }
 
 ?>

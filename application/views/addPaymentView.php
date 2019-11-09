@@ -86,6 +86,7 @@
 <body>
     <div class="container">
         <h1>Dodaj wynagrodzenie</h1>
+        <?php echo form_open(); ?>
         <div class="textbox">
             <i class="fas fa-calendar-week"></i>
             <select name="chooseYear" id="chooseYear">
@@ -109,8 +110,7 @@
             <input type="text" name="payment" placeholder="Podaj kwotę wypłaty">
         </div>
         <br />
-        <a href="#">
-            <input type="submit" name="" value="Zapisz wypłatę" class="btnSavePayment">
-        </a>
+        <input type="submit" name="add" value="Zapisz wypłatę" class="btnSavePayment">
+        <?php echo form_close(); ?>
     </div>
 </body>
