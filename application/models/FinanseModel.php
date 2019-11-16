@@ -42,7 +42,31 @@
 
         public function addPayment($dane)
         {
-            var_dump($dane);die;
+            $currentData = date('Y-m-d');   
+            $payment     = $dane['payment'];
+            $month       = $dane['chooseMonth'];
+            $year        = $dane['chooseYear'];
+
+            $sql = $this->db->query("INSERT INTO FINANSE_wyplaty (kwota, id_miesiaca, id_roku, data_dodania, id_usera)
+                                     VALUES ('$payment', '$month', '$year', '$currentData', '1')");
+                                     
+        }
+
+        public function yourPayment()
+        {
+            $sql = $this->db->query("   SELECT 	payment.id_wyplaty,
+                                                payment.id_usera, 
+                                                payment.kwota,
+                                                year.rok,
+                                                CASE WHEN month.id_miesiaca <= 9 THEN '0'+month.id_miesiaca ELSE month.id_miesiaca END AS miesiac
+                                        FROM FINANSE_wyplaty AS payment
+                                        LEFT JOIN FINANSE_rok AS year 
+                                            ON year.id_roku = payment.id_roku
+                                        LEFT JOIN FINANSE_miesiac AS month 
+                                            ON month.id_miesiaca = payment.id_miesiaca
+                                        WHERE payment.id_usera = 1");
+
+            return $result = $sql->result_array();
         }
     }
 

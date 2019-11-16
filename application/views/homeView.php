@@ -86,6 +86,7 @@
         color: #fff;
         transition: all 300ms;
     }
+    
 </style>
 <body>
     <div class="loginContainer">

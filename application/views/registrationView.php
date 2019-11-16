@@ -91,7 +91,7 @@
 <body>
     <div class="registryContainer">
         <h1>REJESTRACJA</h1>
-        <?php echo form_open(); ?>
+        <?php echo form_open('Finanse/../registration'); ?>
         <div class="textbox">
             <i class="fas fa-user-cog"></i>
             <input type="text" name="name" placeholder="Imię">

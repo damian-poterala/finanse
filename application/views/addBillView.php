@@ -99,10 +99,14 @@
 <body>
     <div class="container">
         <h1>Dodaj rachunek</h1>
+        <?php echo form_open('Finanse/../addBill'); ?>
         <div class="textbox">
             <i class="fas fa-money-bill-wave-alt"></i>
             <select id="choosePayment" name="choosePayment">
                 <option value="0" selected disabled>Wybierz wypłatę</option>
+                <?php foreach($yourPayment as $key) { ?>
+                    <option name="id_wyplaty" value="<?php echo $key['id_wyplaty']; ?>"><?php echo $key['rok'].'-'.$key['miesiac'].' ( '.$key['kwota'].' zł )'; ?></option>
+                <?php } ?>
             </select>
         </div>
         <div class="textbox">
@@ -114,7 +118,7 @@
             <select name="chooseCategory" id="chooseCategory">
                 <option value="0" selected disabled>Wybierz kategorie zakupów</option>
                 <?php foreach($categoryBill as $key) { ?>
-                    <option value="<?php $key['id_kat_rachunkow']; ?>"><?php echo $key['kat_nazwa_pl']; ?></option>
+                    <option name="kat_zakupow" value="<?php echo $key['id_kat_rachunkow']; ?>"><?php echo $key['kat_nazwa_pl']; ?></option>
                 <?php }?>
             </select>
         </div>
@@ -131,7 +135,7 @@
             <select name="paymentCategory" id="paymentCategory">
                 <option value="0" selected disabled>Wybierz rodzaj płatności</option>
                 <?php foreach($categoryPayment as $key) { ?>
-                    <option value="<?php $key['id_typ_platnosci']; ?>"><?php echo $key['nazwa_platnosci']; ?></option>
+                    <option name="kat_platnosci" value="<?php echo $key['id_typ_platnosci']; ?>"><?php echo $key['nazwa_platnosci']; ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -140,7 +144,8 @@
         </div>
         <br />
         <a href="#">
-            <input type="submit" name="" value="Zapisz rachunek" class="btnSaveBill"/>
+            <input type="submit" value="Zapisz rachunek" class="btnSaveBill"/>
         </a>
+        <?php echo form_close(); ?>
     </div>
 </body>

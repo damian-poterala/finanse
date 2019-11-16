@@ -86,13 +86,13 @@
 <body>
     <div class="container">
         <h1>Dodaj wynagrodzenie</h1>
-        <?php echo form_open(); ?>
+        <?php echo form_open('Finanse/../addPayment'); ?>
         <div class="textbox">
             <i class="fas fa-calendar-week"></i>
             <select name="chooseYear" id="chooseYear">
                 <option value="0" selected disabled>Wybierz rok</option>
                 <?php foreach($year as $key) {?>
-                    <option value="<?php $key['id_roku']; ?>"><?php echo $key['rok']; ?></option>
+                    <option value="<?php echo $key['id_roku']; ?>"><?php echo $key['rok']; ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -101,7 +101,7 @@
             <select name="chooseMonth" id="chooseMonth">
                 <option value="0" selected disabled>Wybierz miesiąc</option>
                 <?php foreach($month as $key) { ?>
-                    <option value="<?php $key['id_miesiaca']; ?>"><?php echo $key['miesiac']; ?></option>
+                    <option value="<?php echo $key['id_miesiaca']; ?>"><?php echo $key['miesiac']; ?></option>
                 <?php } ?>
             </select>
         </div>

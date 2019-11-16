@@ -10,7 +10,6 @@
         public function registration()
         {
             $this->load->view('registrationView');
-            // var_dump(base_url().'registration');die;
 
             if(!empty($_POST))
             {
@@ -44,11 +43,27 @@
         {
             $this->load->model('FinanseModel');
 
+            $category['yourPayment'] = $this->FinanseModel->yourPayment();
             $category['categoryBill']    = $this->FinanseModel->categoryBill();
             $category['categoryPayment'] = $this->FinanseModel->categoryPayment();
 
             $this->load->view('sidemenuView');
             $this->load->view('addBillView', $category);
+
+            if(!empty($_POST))
+            {
+                $dane = array(
+                    'choosePayment'   => $this->input->post('choosePayment'),
+                    'numberBill'      => $this->input->post('numberBill'),
+                    'chooseCategory'  => $this->input->post('chooseCategory'),
+                    'amountBill'      => $this->input->post('amountBill'),
+                    'shoppingDate'    => $this->input->post('shoppingDate'),
+                    'paymentCategory' => $this->input->post('paymentCategory'),
+                    'description'     => $this->input->post('description'),
+                );
+                // dodać zapisywanie do bazy danych
+                var_dump($dane);die;
+            }
         }
 
         public function addPayment()
@@ -69,7 +84,7 @@
                     'chooseMonth' => $this->input->post('chooseMonth'),
                     'payment'     => $this->input->post('payment'), 
                 );
-                // var_Dump($dane);die;
+
                 $this->FinanseModel->addPayment($dane);
             }
         }
