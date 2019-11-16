@@ -68,6 +68,67 @@
 
             return $result = $sql->result_array();
         }
+
+        public function addBill($dane)
+        {
+            $currentData     = date('Y-m-d H:i:s');
+            $idPayment       = $dane['choosePayment'];
+            $numberBill      = $dane['numberBill'];
+            $idCategory      = $dane['chooseCategory'];
+            $amountBill      = $dane['amountBill'];
+            $shoppingDate    = $dane['shoppingDate'];
+            $paymentCategory = $dane['paymentCategory'];
+            $description     = $dane['description'];
+
+            $sql = $this->db->query("   INSERT INTO FINANSE_rachunki (  id_wyplaty, 
+                                                                        numer_rachunku, 
+                                                                        id_kat_rachunku,
+                                                                        kwota_rachunku,
+                                                                        data_rachunku,
+                                                                        data_dodania_rachunku,
+                                                                        id_platnosci,
+                                                                        dodatkowy_opis,
+                                                                        id_user)
+                                        VALUES ('$idPayment',
+                                                '$numberBill',
+                                                '$idCategory',
+                                                '$amountBill',
+                                                '$shoppingDate',
+                                                '$currentData',
+                                                '$paymentCategory',
+                                                '$description',
+                                                '1')
+                                        ");
+        }
+
+        public function billList()
+        {
+            $sql = $this->db->query("   SELECT 	bill.id_rachunku,
+                                                bill.id_wyplaty,
+                                                year.rok,
+                                                CONCAT(year.rok, '-', payment.id_miesiaca) AS wyplata,
+                                                category.kat_nazwa_pl,
+                                                bill.kwota_rachunku,
+                                                bill.data_rachunku,
+                                                bill.data_dodania_rachunku,
+                                                type.nazwa_platnosci,
+                                                bill.dodatkowy_opis
+                                        FROM FINANSE_rachunki AS bill
+                                        LEFT JOIN finanse_wyplaty AS payment
+                                            ON payment.id_wyplaty = bill.id_wyplaty
+                                        LEFT JOIN FINANSE_rok AS year 
+                                            ON payment.id_roku = year.id_roku
+                                        LEFT JOIN FINANSE_kategorie_rachunkow AS category
+                                            ON bill.id_kat_rachunku = category.id_kat_rachunkow
+                                        LEFT JOIN FINANSE_typ_platnosci AS type 
+                                            ON bill.id_platnosci = type.id_typ_platnosci
+                                        LEFT JOIN konta AS user 
+                                            ON bill.id_user = user.id_user
+                                        WHERE bill.id_user = 1
+                                        ORDER BY bill.data_rachunku DESC");
+
+            return $result = $sql->result_array();
+        }
     }
 
 ?>

@@ -79,7 +79,7 @@
             </a>
         </div>
         <div class="option">
-            <a href="#">
+            <a href="<?php echo base_url().'billList'; ?>">
                 <input type="submit" value="Lista rachunków" class="btn">
             </a>
         </div>

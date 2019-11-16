@@ -61,8 +61,8 @@
                     'paymentCategory' => $this->input->post('paymentCategory'),
                     'description'     => $this->input->post('description'),
                 );
-                // dodać zapisywanie do bazy danych
-                var_dump($dane);die;
+                
+                $this->FinanseModel->addBill($dane);
             }
         }
 
@@ -87,6 +87,17 @@
 
                 $this->FinanseModel->addPayment($dane);
             }
+        }
+
+        public function billList()
+        {
+            $this->load->model('FinanseModel');
+
+            $date['year'] = $this->FinanseModel->listYear();
+            $date['bill'] = $this->FinanseModel->billList();
+
+            $this->load->view('sidemenuView');
+            $this->load->view('billListView', $date);
         }
     }
 

@@ -19,6 +19,6 @@
 </style>
 <body>
     <div class="container">
-        <span class="title">Ilość dodanych rachunków</span>
+        <span class="title">ILOŚĆ DODANYCH RACHUNKÓW</span>
     </div>
 </body>

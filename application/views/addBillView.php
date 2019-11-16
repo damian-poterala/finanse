@@ -105,7 +105,7 @@
             <select id="choosePayment" name="choosePayment">
                 <option value="0" selected disabled>Wybierz wypłatę</option>
                 <?php foreach($yourPayment as $key) { ?>
-                    <option name="id_wyplaty" value="<?php echo $key['id_wyplaty']; ?>"><?php echo $key['rok'].'-'.$key['miesiac'].' ( '.$key['kwota'].' zł )'; ?></option>
+                    <option value="<?php echo $key['id_wyplaty']; ?>"><?php echo $key['rok'].'-'.$key['miesiac'].' ( '.$key['kwota'].' zł )'; ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -118,7 +118,7 @@
             <select name="chooseCategory" id="chooseCategory">
                 <option value="0" selected disabled>Wybierz kategorie zakupów</option>
                 <?php foreach($categoryBill as $key) { ?>
-                    <option name="kat_zakupow" value="<?php echo $key['id_kat_rachunkow']; ?>"><?php echo $key['kat_nazwa_pl']; ?></option>
+                    <option value="<?php echo $key['id_kat_rachunkow']; ?>"><?php echo $key['kat_nazwa_pl']; ?></option>
                 <?php }?>
             </select>
         </div>
