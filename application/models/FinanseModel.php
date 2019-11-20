@@ -97,8 +97,7 @@
                                                 '$currentData',
                                                 '$paymentCategory',
                                                 '$description',
-                                                '1')
-                                        ");
+                                                '1')");
         }
 
         public function billList()
@@ -126,6 +125,23 @@
                                             ON bill.id_user = user.id_user
                                         WHERE bill.id_user = 1
                                         ORDER BY bill.data_rachunku DESC");
+
+            return $result = $sql->result_array();
+        }
+
+        public function numberOfBillsAdded()
+        {
+            $sql = $this->db->query("   SELECT 	YEAR(bill.data_rachunku) AS ROK, 
+                                                MONTH(bill.data_rachunku) AS NR_MIESIACA,
+                                                month.miesiac,
+                                                COUNT(bill.id_rachunku) AS ILOSC 
+                                        FROM FINANSE_rachunki AS bill
+                                        LEFT JOIN finanse_miesiac AS month
+                                            ON month.id_miesiaca = MONTH(data_rachunku)
+                                        WHERE id_user = 1
+                                            AND YEAR(bill.data_rachunku) = YEAR(NOW())
+                                        GROUP BY YEAR(bill.data_rachunku), MONTH(bill.data_rachunku), month.miesiac
+                                        ORDER BY YEAR(bill.data_rachunku) DESC");
 
             return $result = $sql->result_array();
         }

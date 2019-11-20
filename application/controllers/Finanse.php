@@ -34,9 +34,12 @@
         }
 
         public function mainView()
-        {
+        {   
+            $this->load->model('FinanseModel');
+            $dane['list'] = $this->FinanseModel->numberOfBillsAdded();
+
             $this->load->view('sidemenuView');
-            $this->load->view('mainView');
+            $this->load->view('mainView', $dane);
         }
 
         public function addBill()
