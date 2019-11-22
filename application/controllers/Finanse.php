@@ -38,6 +38,9 @@
             $this->load->model('FinanseModel');
             $dane['list'] = $this->FinanseModel->numberOfBillsAdded();
 
+            // echo '<pre>';
+            // var_dump($dane['list']);die;
+
             $this->load->view('sidemenuView');
             $this->load->view('mainView', $dane);
         }
