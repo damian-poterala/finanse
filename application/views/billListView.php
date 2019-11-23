@@ -31,29 +31,43 @@
         color: #fff;
     }
 
+    th, td {
+        color: #fff;
+    }
+
 </style>
 <body>
     <div class="container">
-        <span class="title">LISTA RACHUNKÓW</span>
+        <span class="title">SZCZEGÓŁOWA LISTA RACHUNKÓW</span>
         <br />
         <br />
         <div class="list">
             <?php foreach($year as $keyYear) { ?>
                 <span class="listYear"><?php echo $keyYear['rok']; ?></span><br /><br />
+                <table>
+                    <tr>
+                        <th>NUMER RACHUNKU</th>
+                        <th>DATA ZAKUPÓW</th>
+                        <th>WYPŁATA</th>
+                        <th>KATEGORIA ZAKUPÓW</th>
+                        <th>KWOTA RACHUNKU</th>
+                        <th>PŁATNOŚĆ</th>
+                        <th>DODATKOWY OPIS</th>
+                    </tr>
                 <?php foreach($bill as $keyBill) { ?>
                     <?php if($keyYear['rok'] == $keyBill['rok']) { ?>
-                        <table>
-                            <tr>
-                                <th>
-                                    <span class="contentTable"><?php echo $keyBill['data_rachunku']; ?></span><br />
-                                </th>
-                                <td>
-                                    <span class="contentTable"><?php echo $keyBill['kwota_rachunku']; ?></span>
-                                </td>
-                            </tr>
-                        </table>
+                        <tr>
+                            <td><?php echo $keyBill['numer_rachunku']; ?></td>
+                            <td><?php echo $keyBill['data_rachunku']; ?></td>
+                            <td><?php echo $keyBill['wyplata']; ?></td>
+                            <td><?php echo $keyBill['kat_nazwa_pl']; ?></td>
+                            <td><?php echo $keyBill['kwota_rachunku']; ?></td>
+                            <td><?php echo $keyBill['nazwa_platnosci']; ?></td>
+                            <td><?php echo $keyBill['dodatkowy_opis']; ?></td>
+                        </tr>
                     <?php } ?>
                 <?php } ?>
+                </table>
             <?php } ?>
         </div>
     </div>

@@ -111,7 +111,8 @@
                                                 bill.data_rachunku,
                                                 bill.data_dodania_rachunku,
                                                 type.nazwa_platnosci,
-                                                bill.dodatkowy_opis
+                                                bill.dodatkowy_opis,
+                                                bill.numer_rachunku
                                         FROM FINANSE_rachunki AS bill
                                         LEFT JOIN finanse_wyplaty AS payment
                                             ON payment.id_wyplaty = bill.id_wyplaty
