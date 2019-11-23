@@ -157,6 +157,24 @@
 
             return json_encode($result);
         }
+
+        public function addedPayment()
+        {
+            $sql = $this->db->query("SELECT month.miesiac,
+                                            (SELECT payment.kwota 
+                                             FROM finanse_wyplaty AS payment
+                                             LEFT JOIN FINANSE_rok AS year 
+                                                 ON year.id_roku = payment.id_roku
+                                             WHERE month.id_miesiaca = id_miesiaca 
+                                                 AND year.rok = YEAR(NOW()) 
+                                                 AND payment.id_usera = 1 
+                                             LIMIT 1) AS WYPLATA
+                                     FROM finanse_miesiac AS month");
+
+            $result = $sql->result_array();
+
+            return json_encode($result);
+        }
     }
 
 ?>

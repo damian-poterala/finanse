@@ -27,6 +27,7 @@
         margin-left: 350px;
         color: #fff;
         margin-right: 20px;
+        margin-top: 30px;
     }
 
     .chartBillAdded {
@@ -37,18 +38,27 @@
         background: #fff;
     }
 
+    .chartAddedPayment {
+        background: #fff;
+    }
+
 </style>
 </head>
 <body>
     <div class="chart">
         <h2>ILOŚĆ DODANYCH RACHUNKÓW</h2>
         <div class="chartBillAdded">
-            <canvas id="chartCountBillAdded" width="100" height="25"></canvas>
+            <canvas id="chartCountBillAdded" width="100" height="15"></canvas>
         </div>
         <br />
         <h2>WARTOŚĆ DODANYCH RACHUNKÓW</h2>
         <div class="chartValueBillAdded">
-            <canvas id="chartValueBillAdded" width="100" height="25"></canvas>
+            <canvas id="chartValueBillAdded" width="100" height="15"></canvas>
+        </div>
+        <br />
+        <h2>DODANE WYPŁATY</h2>
+        <div class="chartAddedPayment">
+            <canvas id="chartAddedPayment" width="100" height="15"></canvas>
         </div>
     </div>
 
@@ -144,6 +154,50 @@
         });
 
         // end create value bill added
+        // start added payment
+        var paymentList = <?php echo $paymentList; ?>;
+
+        var arrMonth   = [];
+        var arrPayment = [];
+
+        for(i = 0; i < paymentList.length; i++)
+        {
+            arrMonth.push(paymentList[i]['miesiac']);
+            arrPayment.push(paymentList[i]['WYPLATA']);
+        }
+
+        var canvas = document.querySelector("#chartAddedPayment");
+
+        var data = 
+        {
+            labels: arrMonth,
+            datasets: 
+            [
+                {
+                    label: "Dodane wypłaty w 2019",
+                    backgroundColor: "rgba(76, 175, 80, .3)",
+                    borderColor: "rgba(rgba(76, 175, 80, 1))",
+                    borderWidth: 2,
+                    data: arrPayment,
+                }
+            ]
+        };
+
+        var option = 
+        {
+            animation: 
+            {
+                duration: 5000
+            }
+        }
+
+        var myBarChartValue = Chart.Bar(canvas, 
+        {
+            data: data,
+            options: option
+        });
+
+        // end added payment
 
     </script>
 </body>

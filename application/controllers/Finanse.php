@@ -36,8 +36,10 @@
         public function mainView()
         {   
             $this->load->model('FinanseModel');
-            $dane['countBill'] = $this->FinanseModel->numberOfBillsAdded();
-            $dane['valueBill'] = $this->FinanseModel->valueBillsAdded();
+            
+            $dane['countBill']   = $this->FinanseModel->numberOfBillsAdded();
+            $dane['valueBill']   = $this->FinanseModel->valueBillsAdded();
+            $dane['paymentList'] = $this->FinanseModel->addedPayment();
 
             $this->load->view('sidemenuView');
             $this->load->view('mainView', $dane);
@@ -80,16 +82,27 @@
             $this->load->view('sidemenuView');
             $this->load->view('addPaymentView', $date);
 
+            $year    = $this->input->post('chooseYear');
+            $month   = $this->input->post('chooseMonth');
+            $payment = $this->input->post('payment');
+
             if(!empty($_POST))
             {
-                $dane = array
-                (
-                    'chooseYear'  => $this->input->post('chooseYear'),
-                    'chooseMonth' => $this->input->post('chooseMonth'),
-                    'payment'     => $this->input->post('payment'), 
-                );
+                if($year == NULL || $month == NULL || $payment == NULL)
+                {
+                    echo 'Wypełnij formularz';
+                }
+                else
+                {
+                    $dane = array
+                    (
+                        'chooseYear'  => $this->input->post('chooseYear'),
+                        'chooseMonth' => $this->input->post('chooseMonth'),
+                        'payment'     => $this->input->post('payment'), 
+                    );
 
-                $this->FinanseModel->addPayment($dane);
+                    $this->FinanseModel->addPayment($dane);
+                }
             }
         }
 

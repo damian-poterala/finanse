@@ -86,6 +86,7 @@
 <body>
     <div class="container">
         <h1>Dodaj wynagrodzenie</h1>
+        <?php echo validation_errors(); ?>
         <?php echo form_open('Finanse/../addPayment'); ?>
         <div class="textbox">
             <i class="fas fa-calendar-week"></i>
