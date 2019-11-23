@@ -142,6 +142,20 @@
 
             return json_encode($result);
         }
+
+        public function valueBillsAdded()
+        {
+            $sql = $this->db->query("SELECT month.miesiac,
+                                            (SELECT sum(kwota_rachunku) 
+                                             FROM FINANSE_rachunki 
+                                             WHERE month.id_miesiaca = MONTH(data_rachunku) 
+                                                 AND YEAR(data_rachunku) = YEAR(NOW())) AS WARTOSC
+                                     FROM finanse_miesiac AS month");
+
+            $result = $sql->result_array();
+
+            return json_encode($result);
+        }
     }
 
 ?>
