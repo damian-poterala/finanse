@@ -75,6 +75,12 @@
         border: 1px solid #000;
     }
 
+    th {
+        background: #1B1B1B;
+        color: #fff;
+        font-size: 14px;
+    }
+
 </style>
 <body>
     <div class="container">
@@ -82,11 +88,13 @@
         <br />
         <br />
         <div class="list">
+            <?php $count = 1;?>
             <?php foreach($year as $keyYear) { ?>
                 <button class="collapsible"><?php echo $keyYear['rok']; ?></button>
                 <div class="content">
                     <table>
                         <tr>
+                            <th>LP.</th>
                             <th>NUMER RACHUNKU</th>
                             <th>DATA ZAKUPÓW</th>
                             <th>WYPŁATA</th>
@@ -98,6 +106,7 @@
                     <?php foreach($bill as $keyBill) { ?>
                         <?php if($keyYear['rok'] == $keyBill['rok']) { ?>
                             <tr>
+                                <td><?php echo $count++.'.'; ?></td>
                                 <td><?php echo $keyBill['numer_rachunku']; ?></td>
                                 <td><?php echo $keyBill['data_rachunku']; ?></td>
                                 <td><?php echo $keyBill['wyplata']; ?></td>
