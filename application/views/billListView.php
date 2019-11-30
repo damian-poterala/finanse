@@ -121,6 +121,7 @@
                 </div>
             <?php } ?>
         </div>
+        <button class="downloadReport">Pobierz raport</button>
     </div>
     <script>
 
@@ -143,6 +144,13 @@
                 } 
             });
         }
+
+        var btn = document.querySelector('.downloadReport');
+
+        btn.addEventListener("click", function()
+        {
+            window.location.href = 'http://localhost/reports/finanse/index.php';
+        });
 
     </script>
 </body>

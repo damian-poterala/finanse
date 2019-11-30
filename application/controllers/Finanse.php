@@ -116,6 +116,12 @@
             $this->load->view('sidemenuView');
             $this->load->view('billListView', $date);
         }
+
+        public function listReports()
+        {
+            $this->load->view('sidemenuView');
+            $this->load->view('listReportsView');
+        }
     }
 
 ?>

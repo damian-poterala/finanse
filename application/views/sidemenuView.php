@@ -84,6 +84,11 @@
             </a>
         </div>
         <div class="option">
+            <a href="<?php echo base_url().'listReports'; ?>">
+                <input type="submit" value="Lista raportów" class="btn">
+            </a>
+        </div>
+        <div class="option">
             <a href="#">
                 <input type="submit" value="Profil" class="btn">
             </a>
