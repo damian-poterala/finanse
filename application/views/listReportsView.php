@@ -59,26 +59,46 @@
         background: #1B1B1B;
     }
 
+    .btnReports {
+        width: 100%;
+        background: none;
+        border: 2px solid #4CAF50;
+        color: #fff;
+        padding: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 6px 0;
+        transition: all 300ms;
+    }
 
+    .btnReports:hover {
+        background: #4CAF50;
+        color: #fff;
+        transition: all 300ms;
+    }
 
 </style>
 <body>
     <div class="container">
         <h1>Pobierz raport wszystkich rachunków</h1>
-        <button>Pobierz raport</button>
+        <button class="btnReports" id="generateAllListBill">Pobierz raport</button>
         <br />
         <h1>Generator własnego raportu</h1>
         <div class="textboxSelect">
             <select name="chooseYear" id="chooseYear">
                 <option value="100" selected disabled>Wybierz rok</option>
-
+                    <?php foreach($year as $key) { ?>
+                        <option value="<?php echo $key['id_roku']; ?>"><?php echo $key['rok']; ?></option>
+                    <?php } ?>
                 <option value="0">Wszystkie</option>
             </select>
         </div>
         <div class="textboxSelect">
             <select name="chooseMonth" id="chooseMonth">
                 <option value="100" selected disabled>Wybierz miesiąc</option>
-
+                    <?php foreach($month as $key) { ?>
+                        <option value="<?php echo $key['id_miesiaca']; ?>"><?php echo $key['miesiac']; ?></option>
+                    <?php } ?>
                 <option value="0">Wszystkie</option>
             </select>
         </div>
@@ -115,6 +135,16 @@
             <input type="checkbox" />
         </div>
         <br />
-        <button>Generuj własny raport</button>
+        <input type="submit" class="btnReports" name="generate" value="Generuj własny raport" />
     </div>
+    <script>
+
+        var btn = document.querySelector('#generateAllListBill');
+
+        btn.addEventListener("click", function()
+        {
+            window.location.href = 'http://localhost/reports/finanse/index.php';
+        });
+
+    </script>
 </body>

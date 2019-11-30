@@ -119,8 +119,12 @@
 
         public function listReports()
         {
+            $this->load->model('FinanseModel');
+            $date['year']  = $this->FinanseModel->listYear();
+            $date['month'] = $this->FinanseModel->listMonth();
+
             $this->load->view('sidemenuView');
-            $this->load->view('listReportsView');
+            $this->load->view('listReportsView', $date);
         }
     }
 
