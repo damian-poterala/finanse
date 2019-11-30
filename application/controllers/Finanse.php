@@ -78,11 +78,13 @@
         {   
             if($this->session->userdata('login') != '')
             {
+                $user = $this->session->userdata('login');
+
                 $this->load->model('FinanseModel');
             
-                $dane['countBill']   = $this->FinanseModel->numberOfBillsAdded();
-                $dane['valueBill']   = $this->FinanseModel->valueBillsAdded();
-                $dane['paymentList'] = $this->FinanseModel->addedPayment();
+                $dane['countBill']   = $this->FinanseModel->numberOfBillsAdded($user);
+                $dane['valueBill']   = $this->FinanseModel->valueBillsAdded($user);
+                $dane['paymentList'] = $this->FinanseModel->addedPayment($user);
                 $dane['login']       = $this->session->userdata('login');
 
                 $this->load->view('sidemenuView');
@@ -96,9 +98,11 @@
 
         public function addBill()
         {
+            $user = $this->session->userdata('login');
+
             $this->load->model('FinanseModel');
  
-            $category['yourPayment'] = $this->FinanseModel->yourPayment();
+            $category['yourPayment'] = $this->FinanseModel->yourPayment($user);
             $category['categoryBill']    = $this->FinanseModel->categoryBill();
             $category['categoryPayment'] = $this->FinanseModel->categoryPayment();
 
@@ -117,12 +121,14 @@
                     'description'     => $this->input->post('description'),
                 );
                 
-                $this->FinanseModel->addBill($dane);
+                $this->FinanseModel->addBill($dane, $user);
             }
         }
 
         public function addPayment()
         {
+            $user = $this->session->userdata('login');
+
             $this->load->model('FinanseModel');
             
             $date['year']  = $this->FinanseModel->listYear();
@@ -150,17 +156,19 @@
                         'payment'     => $this->input->post('payment'), 
                     );
 
-                    $this->FinanseModel->addPayment($dane);
+                    $this->FinanseModel->addPayment($dane, $user);
                 }
             }
         }
 
         public function billList()
         {
+            $user = $this->session->userdata('login');
+
             $this->load->model('FinanseModel');
 
             $date['year'] = $this->FinanseModel->listYear();
-            $date['bill'] = $this->FinanseModel->billList();
+            $date['bill'] = $this->FinanseModel->billList($user);
 
             $this->load->view('sidemenuView');
             $this->load->view('billListView', $date);

@@ -56,20 +56,31 @@
             return $result = $sql->result_array();
         }
 
-        public function addPayment($dane)
+        public function addPayment($dane, $user)
         {
+
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
+
             $currentData = date('Y-m-d');   
             $payment     = $dane['payment'];
             $month       = $dane['chooseMonth'];
             $year        = $dane['chooseYear'];
 
             $sql = $this->db->query("INSERT INTO FINANSE_wyplaty (kwota, id_miesiaca, id_roku, data_dodania, id_usera)
-                                     VALUES ('$payment', '$month', '$year', '$currentData', '1')");
+                                     VALUES ('$payment', '$month', '$year', '$currentData', '$id')");
                                      
         }
 
-        public function yourPayment()
+        public function yourPayment($user)
         {
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
+
             $sql = $this->db->query("   SELECT 	payment.id_wyplaty,
                                                 payment.id_usera, 
                                                 payment.kwota,
@@ -80,12 +91,12 @@
                                             ON year.id_roku = payment.id_roku
                                         LEFT JOIN FINANSE_miesiac AS month 
                                             ON month.id_miesiaca = payment.id_miesiaca
-                                        WHERE payment.id_usera = 1");
+                                        WHERE payment.id_usera = '$id' ");
 
             return $result = $sql->result_array();
         }
 
-        public function addBill($dane)
+        public function addBill($dane, $user)
         {
             $currentData     = date('Y-m-d H:i:s');
             $idPayment       = $dane['choosePayment'];
@@ -95,6 +106,11 @@
             $shoppingDate    = $dane['shoppingDate'];
             $paymentCategory = $dane['paymentCategory'];
             $description     = $dane['description'];
+
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
 
             $sql = $this->db->query("   INSERT INTO FINANSE_rachunki (  id_wyplaty, 
                                                                         numer_rachunku, 
@@ -113,11 +129,16 @@
                                                 '$currentData',
                                                 '$paymentCategory',
                                                 '$description',
-                                                '1')");
+                                                '$id' )");
         }
 
-        public function billList()
+        public function billList($user)
         {
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
+
             $sql = $this->db->query("   SELECT 	bill.id_rachunku,
                                                 bill.id_wyplaty,
                                                 year.rok,
@@ -140,19 +161,25 @@
                                             ON bill.id_platnosci = type.id_typ_platnosci
                                         LEFT JOIN konta AS user 
                                             ON bill.id_user = user.id_user
-                                        WHERE bill.id_user = 1
+                                        WHERE bill.id_user = '$id'
                                         ORDER BY bill.data_rachunku DESC");
 
             return $result = $sql->result_array();
         }
 
-        public function numberOfBillsAdded()
+        public function numberOfBillsAdded($user)
         {
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
+
             $sql = $this->db->query("SELECT month.miesiac,
                                             (SELECT COUNT(id_rachunku) 
                                              FROM FINANSE_rachunki 
                                              WHERE month.id_miesiaca = MONTH(data_rachunku) 
-                                                 AND YEAR(data_rachunku) = YEAR(NOW())) AS ILOSC
+                                                 AND YEAR(data_rachunku) = YEAR(NOW())
+                                                 AND id_user = '$id' ) AS ILOSC
                                      FROM finanse_miesiac AS month");
 
             $result = $sql->result_array();
@@ -160,13 +187,19 @@
             return json_encode($result);
         }
 
-        public function valueBillsAdded()
+        public function valueBillsAdded($user)
         {
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
+
             $sql = $this->db->query("SELECT month.miesiac,
                                             (SELECT sum(kwota_rachunku) 
                                              FROM FINANSE_rachunki 
                                              WHERE month.id_miesiaca = MONTH(data_rachunku) 
-                                                 AND YEAR(data_rachunku) = YEAR(NOW())) AS WARTOSC
+                                                 AND YEAR(data_rachunku) = YEAR(NOW())
+                                                 AND id_user = '$id' ) AS WARTOSC
                                      FROM finanse_miesiac AS month");
 
             $result = $sql->result_array();
@@ -174,8 +207,13 @@
             return json_encode($result);
         }
 
-        public function addedPayment()
+        public function addedPayment($user)
         {
+            $sql = $this->db->query("SELECT id_user FROM konta WHERE login = '$user' ");
+
+            $userId = $sql->result_array();
+            $id     = $userId[0]['id_user'];
+
             $sql = $this->db->query("SELECT month.miesiac,
                                             (SELECT payment.kwota 
                                              FROM finanse_wyplaty AS payment
@@ -183,7 +221,7 @@
                                                  ON year.id_roku = payment.id_roku
                                              WHERE month.id_miesiaca = id_miesiaca 
                                                  AND year.rok = YEAR(NOW()) 
-                                                 AND payment.id_usera = 1 
+                                                 AND payment.id_usera = '$id'  
                                              LIMIT 1) AS WYPLATA
                                      FROM finanse_miesiac AS month");
 
