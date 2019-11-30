@@ -7,6 +7,22 @@
             parent::__construct();
         }
 
+        public function canLogin($login, $password)
+        {
+            $sql = $this->db->query("SELECT * FROM konta WHERE login = '$login' AND password = '$password' ");
+
+            $result = $sql->num_rows();
+
+            if($result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public function createAccount($dane)
         {
             $this->db->insert('konta', $dane);

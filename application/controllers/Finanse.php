@@ -33,22 +33,71 @@
             }
         }
 
+        public function loginValidation()
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('login', 'Login', 'required');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+        
+            if($this->form_validation->run())
+            {
+                $login    = $this->input->post('login');
+                $password = $this->input->post('password');
+
+                $this->load->model('FinanseModel');
+                
+                if($this->FinanseModel->canLogin($login, $password))
+                {
+                    $session = array(
+                        'login' => $login
+                    );
+
+                    $this->session->set_userdata($session);
+                    redirect(base_url().'mainView');
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'invalid login or password');
+                    redirect(base_url());
+                }
+            }
+            else
+            {
+                $this->index();
+            }
+        }
+
+        public function logout()
+        {
+            $this->session->unset_userdata('login');
+            redirect(base_url()); 
+        }
+
         public function mainView()
         {   
-            $this->load->model('FinanseModel');
+            if($this->session->userdata('login') != '')
+            {
+                $this->load->model('FinanseModel');
             
-            $dane['countBill']   = $this->FinanseModel->numberOfBillsAdded();
-            $dane['valueBill']   = $this->FinanseModel->valueBillsAdded();
-            $dane['paymentList'] = $this->FinanseModel->addedPayment();
+                $dane['countBill']   = $this->FinanseModel->numberOfBillsAdded();
+                $dane['valueBill']   = $this->FinanseModel->valueBillsAdded();
+                $dane['paymentList'] = $this->FinanseModel->addedPayment();
+                $dane['login']       = $this->session->userdata('login');
 
-            $this->load->view('sidemenuView');
-            $this->load->view('mainView', $dane);
+                $this->load->view('sidemenuView');
+                $this->load->view('mainView', $dane);
+            }   
+            else
+            {
+                redirect(base_url());
+            }
         }
 
         public function addBill()
         {
             $this->load->model('FinanseModel');
-
+ 
             $category['yourPayment'] = $this->FinanseModel->yourPayment();
             $category['categoryBill']    = $this->FinanseModel->categoryBill();
             $category['categoryPayment'] = $this->FinanseModel->categoryPayment();

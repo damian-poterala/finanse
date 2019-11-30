@@ -19,7 +19,7 @@
         float: left;
         font-size: 25px;
         border-bottom: 6px solid #4CAF50;
-        margin-bottom: 50px;
+        margin-bottom: 25px;
         padding: 13px 0;
     }
 
@@ -59,7 +59,7 @@
         background: #1B1B1B;
     }
 
-    .btnReports {
+    .btnReports, #generateYourReport {
         width: 100%;
         background: none;
         border: 2px solid #4CAF50;
@@ -71,7 +71,7 @@
         transition: all 300ms;
     }
 
-    .btnReports:hover {
+    .btnReports:hover, #generateYourReport:hover {
         background: #4CAF50;
         color: #fff;
         transition: all 300ms;
@@ -85,7 +85,7 @@
         <br />
         <h1>Generator własnego raportu</h1>
         <div class="textboxSelect">
-            <select name="chooseYear" id="chooseYear">
+            <select name="chooseYear" id="chooseYear" class="chooseYear">
                 <option value="100" selected disabled>Wybierz rok</option>
                     <?php foreach($year as $key) { ?>
                         <option value="<?php echo $key['id_roku']; ?>"><?php echo $key['rok']; ?></option>
@@ -94,7 +94,7 @@
             </select>
         </div>
         <div class="textboxSelect">
-            <select name="chooseMonth" id="chooseMonth">
+            <select name="chooseMonth" id="chooseMonth" class="chooseMonth">
                 <option value="100" selected disabled>Wybierz miesiąc</option>
                     <?php foreach($month as $key) { ?>
                         <option value="<?php echo $key['id_miesiaca']; ?>"><?php echo $key['miesiac']; ?></option>
@@ -104,47 +104,67 @@
         </div>
         <div class="textbox">
             <span class="option">Pokaż numer rachunku</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showNumberBill" name="showNumberBill"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż kategorię rachunku</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showCatBill" name="showCatBill"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż wypłatę</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showPayment" name="showPayment"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż kwotę rachunku</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showAmountBill" name="showAmountBill"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż datę rachunku</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showDateBill" name="showDateBill"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż datę dodania rachunku</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showAddDateBill" name="showAddDateBill"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż dodatkowy opis rachunku</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showDescription" name="showDescription"/>
         </div>
         <div class="textbox">
             <span class="option">Pokaż średnią rachunków</span>
-            <input type="checkbox" />
+            <input type="checkbox" id="showAverageBill" name="showAverageBill"/>
         </div>
         <br />
-        <input type="submit" class="btnReports" name="generate" value="Generuj własny raport" />
+        <input type="submit" id="generateYourReport" name="generateYourReport" value="Generuj własny raport" />
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
-
-        var btn = document.querySelector('#generateAllListBill');
-
-        btn.addEventListener("click", function()
+        
+        $(document).ready(function()
         {
-            window.location.href = 'http://localhost/reports/finanse/index.php';
-        });
+            $('#generateAllListBill').click(function()
+            {
+                window.location.href = 'http://localhost/reports/finanse/index.php';
+            });
 
+            // getting values from input
+
+            $('#generateYourReport').click(function()
+            {
+                var year         = $('#chooseYear').val();
+                var month        = $('#chooseMonth').val();
+                var numberBill   = $('#showNumberBill').is(':checked');
+                var categoryBill = $('#showCatBill').is(':checked');
+                var payment      = $('#showPayment').is(':checked');
+                var amountBill   = $('#showAmountBill').is(':checked');
+                var dateBill     = $('#showDateBill').is(':checked');
+                var addDateBill  = $('#showAddDateBill').is(':checked');
+                var description  = $('#showDescription').is(':checked');
+                var averageBill  = $('#showAverageBill').is(':checked');
+
+                console.log(year, month, numberBill, categoryBill, payment, amountBill, dateBill, addDateBill, description, averageBill);
+            });
+        });
+    
     </script>
 </body>

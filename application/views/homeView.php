@@ -86,24 +86,30 @@
         color: #fff;
         transition: all 300ms;
     }
+
+    .errorLogin, .errorPassword {
+        color: red;
+        font-size: 12px;
+    }
     
 </style>
 <body>
     <div class="loginContainer">
         <h1>LOGOWANIE</h1>
-        <div class="textbox">
-            <i class="fas fa-user"></i>
-            <input type="text" name="login" placeholder="Login">
-            <span><?php echo form_error('Wpisano zły login'); ?></span>
-        </div>
-        <div class="textbox">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="password" placeholder="Hasło">
-            <span><?php echo form_error('Wpisano złe hasło'); ?></span>
-        </div>
-        <a href="<?php echo base_url().'mainView'; ?>">
+        <form action="<?php echo base_url(); ?>loginValidation" method="POST">
+            <div class="textbox">
+                <i class="fas fa-user"></i>
+                <input type="text" name="login" placeholder="Login">
+            </div>
+            <span class="errorLogin"><?php echo form_error('login'); ?></span>
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Hasło">
+            </div>
+            <span class="errorPassword"><?php echo form_error('password'); ?></span>
             <input type="submit" value="Zaloguj" class="btnLogin">
-        </a>
+            <?php echo $this->session->flashdata('error'); ?>
+        </form>
         <br />
         <a href="<?php echo base_url().'registration'; ?>">
             <input type="submit" name="" value="Rejestracja" class="btnRegistry">

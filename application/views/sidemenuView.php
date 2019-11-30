@@ -99,7 +99,7 @@
             </a>
         </div>
         <div class="option">
-            <a href="<?php echo base_url(); ?>">
+            <a href="<?php echo base_url().'logout'; ?>">
                 <input type="submit" value="Wyloguj" class="btn">
             </a>
         </div>

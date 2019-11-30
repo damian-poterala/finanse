@@ -46,6 +46,7 @@
 </head>
 <body>
     <div class="chart">
+        <h1><?php echo $login; ?></h1>
         <h2>ILOŚĆ DODANYCH RACHUNKÓW</h2>
         <div class="chartBillAdded">
             <canvas id="chartCountBillAdded" width="100" height="15"></canvas>
