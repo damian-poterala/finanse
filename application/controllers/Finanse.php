@@ -37,8 +37,8 @@
         {
             $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('login', 'Login', 'required');
-            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_rules('login', 'login', 'required');
+            $this->form_validation->set_rules('password', 'password', 'required');
         
             if($this->form_validation->run())
             {
@@ -176,9 +176,12 @@
 
         public function listReports()
         {
+            $user = $this->session->userdata('login');
+
             $this->load->model('FinanseModel');
             $date['year']  = $this->FinanseModel->listYear();
             $date['month'] = $this->FinanseModel->listMonth();
+            $date['user'] = $user;
 
             $this->load->view('sidemenuView');
             $this->load->view('listReportsView', $date);

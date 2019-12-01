@@ -94,11 +94,6 @@
             </a>
         </div>
         <div class="option">
-            <a href="#">
-                <input type="submit" value="Ustawienia" class="btn">
-            </a>
-        </div>
-        <div class="option">
             <a href="<?php echo base_url().'logout'; ?>">
                 <input type="submit" value="Wyloguj" class="btn">
             </a>

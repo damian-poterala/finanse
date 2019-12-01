@@ -77,6 +77,12 @@
         transition: all 300ms;
     }
 
+    .errorFormYear, .errorFormMonth {
+        color: red;
+        font-size: 12px;
+        display: none;
+    }
+
 </style>
 <body>
     <div class="container">
@@ -93,6 +99,7 @@
                 <option value="0">Wszystkie</option>
             </select>
         </div>
+        <span class="errorFormYear">Proszę wybrać rok!</span>
         <div class="textboxSelect">
             <select name="chooseMonth" id="chooseMonth" class="chooseMonth">
                 <option value="100" selected disabled>Wybierz miesiąc</option>
@@ -102,6 +109,7 @@
                 <option value="0">Wszystkie</option>
             </select>
         </div>
+        <span class="errorFormMonth">Proszę wybrać miesiąc!</span>
         <div class="textbox">
             <span class="option">Pokaż numer rachunku</span>
             <input type="checkbox" id="showNumberBill" name="showNumberBill"/>
@@ -139,13 +147,15 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
-        
+
         $(document).ready(function()
         {
             $('#generateAllListBill').click(function()
             {
                 window.location.href = 'http://localhost/reports/finanse/index.php';
             });
+
+            let user = '<?php echo $user; ?>';
 
             // getting values from input
 
@@ -162,7 +172,43 @@
                 var description  = $('#showDescription').is(':checked');
                 var averageBill  = $('#showAverageBill').is(':checked');
 
-                console.log(year, month, numberBill, categoryBill, payment, amountBill, dateBill, addDateBill, description, averageBill);
+                console.log('User na klika: ',user);
+
+                // console.log(year, month, numberBill, categoryBill, payment, amountBill, dateBill, addDateBill, description, averageBill);
+
+                if(year != null && month != null)
+                {
+                    $.ajax
+                    ({
+                        type: 'POST',
+                        url: 'http://localhost/reports/finanse/ownReport.php',
+                        data: 
+                        {
+                            year: year,
+                            month: month,
+                            numberBill: numberBill,
+                            categoryBill: categoryBill,
+                            payment: payment,
+                            amountBill: amountBill,
+                            dateBill: dateBill,
+                            addDateBill: addDateBill,
+                            description: description, 
+                            averageBill: averageBill,
+                            user: user
+                        },
+                        dateType: 'json',
+
+                        success: function()
+                        {
+                            window.location.href = 'http://localhost/reports/finanse/ownReport.php';
+                        }
+                    });
+                }
+                else 
+                {
+                    if(year == null)  { $('.errorFormYear').css('display', 'block'); }
+                    if(month == null) { $('.errorFormMonth').css('display', 'block'); }
+                }
             });
         });
     
