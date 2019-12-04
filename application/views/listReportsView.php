@@ -180,27 +180,15 @@
                 {
                     $.ajax
                     ({
-                        type: 'POST',
+                        type: 'GET',
                         url: 'http://localhost/reports/finanse/ownReport.php',
-                        data: 
-                        {
-                            year: year,
-                            month: month,
-                            numberBill: numberBill,
-                            categoryBill: categoryBill,
-                            payment: payment,
-                            amountBill: amountBill,
-                            dateBill: dateBill,
-                            addDateBill: addDateBill,
-                            description: description, 
-                            averageBill: averageBill,
-                            user: user
-                        },
+                        contentType: 'application/json; charset=utf-8',
                         dateType: 'json',
 
                         success: function()
                         {
-                            window.location.href = 'http://localhost/reports/finanse/ownReport.php';
+                            var url = 'year='+year+'&month='+month;
+                            window.location.href = 'http://localhost/reports/finanse/ownReport.php?user='+user;
                         }
                     });
                 }
